@@ -932,7 +932,7 @@ font-family: 'Quicksand', sans-serif;
       z-index: -1;
       content: '';
       display: block;
-      border: 5px solid #85010f;
+      border: 5px solid #f74b81;
       border-top-color: transparent;
       border-right-color: transparent;
       top: 0px;
@@ -944,7 +944,7 @@ font-family: 'Quicksand', sans-serif;
       z-index: -1;
       content: '';
       display: block;
-      border: 5px solid #85010f;
+      border: 5px solid #f74b81;
       border-top-color: transparent;
       border-right-color: transparent;
       bottom: 56px;
@@ -957,7 +957,7 @@ font-family: 'Quicksand', sans-serif;
       width: 170px;
       padding: 5px 0;
       box-shadow: 0 5px 10px rgba(0,0,0,.1);
-      color: #f85506;
+      color: #fff;
       font: 600 15px/1 'Lato', sans-serif;
       text-shadow: 0 1px 1px rgba(0,0,0,.2);
       text-align: center;
@@ -1002,12 +1002,12 @@ font-family: 'Quicksand', sans-serif;
       font-size: 14px;
       font-weight: 700;
       border: none;
-      color: #0a261a;
+      color: #f85506;
       transition: all .3s ease;
   }
 
   .product-item-bottom .add-cart:hover .add-cart-btn {
-      background-color: #0a261a;
+      background-color: #f85506;
       color: #fff;
       -webkit-transform: translateY(-5px);
       transform: translateY(-5px);
@@ -1043,18 +1043,18 @@ font-family: 'Quicksand', sans-serif;
       margin-top: 10px;
       display: block;
       text-align: center;
-      background: #890200;
+      background: #8c0001;
       border-radius: 5px;
       padding: 8px 0;
       font-size: 16px;
       font-weight: 700;
       color: #fff;
-      border: 1px solid #890200;
+      border: 1px solid #8c0001;
   }
 
   .quick-order-btn-inner:hover {
       background: transparent;
-      color: #890200;
+      color: #8c0001;
   }
 
   .order-btn {
@@ -1070,19 +1070,19 @@ font-family: 'Quicksand', sans-serif;
 
 /* Product badges color css start */
 .product-image-outer .product-badges.hot span {
-    background-color: #85010f;
+    background-color: #8c0001;
 }
 
 .product-image-outer .product-badges.offer span {
-    background: #85010f;
+    background: #8c0001;
 }
 
 .product-image-outer .product-badges.best-sale span {
-    background: #85010f;
+    background: #8c0001;
 }
 
 .product-image-outer .product-badges.new span {
-    background: #85010f;
+    background: #8c0001;
 }
 /* Product badges color css End */
 .banner-item-outer.side-banner img {
