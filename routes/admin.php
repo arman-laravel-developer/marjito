@@ -35,6 +35,11 @@ Route::group(['middleware' => 'isAdmin'], function(){
     Route::get('/products/inactive/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'inactive'])->name('products.inactive');
     Route::get('/products/delete/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'delete'])->name('products.delete');
 
+        //Gallery Image...
+    Route::get('/gallery-image/delete/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'galleryImageDelete']);
+    Route::get('/gallery-image/edit/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'galleryImageEdit']);
+    Route::post('/gallery-image/update/{id}', [\App\Http\Controllers\Admin\ProductController::class, 'galleryImageUpdate']);
+
     //Variable Product Purpose....
     Route::get('/admin/variable-products/create', [\App\Http\Controllers\Admin\ProductController::class, 'createVariableProduct'])->name('admin.variable-products.create');
     Route::post('/variable-products/store', [\App\Http\Controllers\Admin\ProductController::class, 'storeVariableProduct'])->name('variable.products.store');

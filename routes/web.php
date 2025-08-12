@@ -99,7 +99,7 @@ Route::get('/get/combo/products', [App\Http\Controllers\Frontend\CartController:
 Route::get('/cart/products/count', [App\Http\Controllers\Frontend\CartController::class, 'totalCartProducts']);
 Route::get('/cart/products/price', [App\Http\Controllers\Frontend\CartController::class, 'totalCartProductsPrice']);
 Route::get('/remove/cart/product/{id}', [App\Http\Controllers\Frontend\CartController::class, 'removeCartProduct']);
-Route::get('/cart-product-update/{id}', [App\Http\Controllers\Frontend\CartController::class, 'updateCartProduct']);
+Route::put('/cart-product-update/{id}', [App\Http\Controllers\Frontend\CartController::class, 'updateCartProduct'])->name('cart.update');
 Route::get('/cart-product-decrement/{id}', [App\Http\Controllers\Frontend\CartController::class, 'decrementCartProduct']);
 Route::post('/cart-update/{id}', [App\Http\Controllers\Frontend\CartController::class, 'cartUpdate']);
 Route::get('/cart/product/delete/{id}', [App\Http\Controllers\Frontend\CartController::class, 'cartProductDelete']);

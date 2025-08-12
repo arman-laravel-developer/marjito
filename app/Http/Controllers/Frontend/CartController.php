@@ -44,6 +44,7 @@ class CartController extends Controller
             //if cart already have this product
             if ($oldCartProduct){
                 $oldCartProduct->qty = $oldCartProduct->qty+1;
+                $oldCartProduct->price += $product->discount_price ?? $product->regular_price;
                 $oldCartProduct->save();
             }
             else{
@@ -81,6 +82,7 @@ class CartController extends Controller
             //if cart already have this product
             if ($oldCartProduct){
                 $oldCartProduct->qty = $oldCartProduct->qty+1;
+                $oldCartProduct->price += $product->discount_price ?? $product->regular_price;
                 $oldCartProduct->save();
             }
             else{
@@ -136,100 +138,136 @@ class CartController extends Controller
         }
         //Check Previos Cart Product Type...
 
+        $oldCartProduct = Cart::where('product_id', $currentCartProduct->id)->where('ip_address', $ip_address)->first();
+
         $action = $request->input('action');
         if($action === 'addToCart'){
-            if (auth()->check()){
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $request->product_id;
-                $cartProduct->user_id = auth()->user()->id;
-                $cartProduct->qty = $request->qty;
-                $cartProduct->color = $request->color;
-                $cartProduct->size = $request->size;
-                $cartProduct->price = $request->price;
-                $cartProduct->save();
-            }else{
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $request->product_id;
-                $cartProduct->ip_address = $request->ip();
-                $cartProduct->qty = $request->qty;
-                $cartProduct->color = $request->color;
-                $cartProduct->size = $request->size;
-                $cartProduct->price = $request->price;
-                $cartProduct->save();
+            if ($oldCartProduct){
+                $oldCartProduct->qty = $oldCartProduct->qty + $request->qty;
+                $oldCartProduct->price += $request->inputPrice;
+                $oldCartProduct->save();
+            }
+            else
+            {
+                if (auth()->check()){
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $request->product_id;
+                    $cartProduct->user_id = auth()->user()->id;
+                    $cartProduct->qty = $request->qty;
+                    $cartProduct->color = $request->color;
+                    $cartProduct->size = $request->size;
+                    $cartProduct->price = $request->price;
+                    $cartProduct->save();
+                }else{
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $request->product_id;
+                    $cartProduct->ip_address = $request->ip();
+                    $cartProduct->qty = $request->qty;
+                    $cartProduct->color = $request->color;
+                    $cartProduct->size = $request->size;
+                    $cartProduct->price = $request->price;
+                    $cartProduct->save();
+                }
             }
             return redirect()->back()->with('success', 'Added to cart!');
         }
 
         else{
-            if (auth()->check()){
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $request->product_id;
-                $cartProduct->user_id = auth()->user()->id;
-                $cartProduct->qty = $request->qty;
-                $cartProduct->color = $request->color;
-                $cartProduct->size = $request->size;
-                $cartProduct->price = $request->price;
-                $cartProduct->save();
-            }else{
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $request->product_id;
-                $cartProduct->ip_address = $request->ip();
-                $cartProduct->qty = $request->qty;
-                $cartProduct->color = $request->color;
-                $cartProduct->size = $request->size;
-                $cartProduct->price = $request->price;
-                $cartProduct->save();
+            if ($oldCartProduct){
+                $oldCartProduct->qty = $oldCartProduct->qty + $request->qty;
+                $oldCartProduct->price += $request->inputPrice;
+                $oldCartProduct->save();
             }
+            else
+            {
+                if (auth()->check()){
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $request->product_id;
+                    $cartProduct->user_id = auth()->user()->id;
+                    $cartProduct->qty = $request->qty;
+                    $cartProduct->color = $request->color;
+                    $cartProduct->size = $request->size;
+                    $cartProduct->price = $request->price;
+                    $cartProduct->save();
+                }else{
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $request->product_id;
+                    $cartProduct->ip_address = $request->ip();
+                    $cartProduct->qty = $request->qty;
+                    $cartProduct->color = $request->color;
+                    $cartProduct->size = $request->size;
+                    $cartProduct->price = $request->price;
+                    $cartProduct->save();
+                }
+            }
+
             return redirect('/checkout')->with('success', 'Added to cart!');
         }
     }
 
-    public function addToCartVariableDetailsPage (Request $request, $id)
+    public function addToCartVariableDetailsPage (Request $request,Product $product, $id)
     {
+        $oldCartProduct = Cart::where('product_id', $product->id)->where('ip_address', request()->ip())->first();
         $action = $request->button_action;
         if($action === 'addToCart'){
-            if (auth()->check()){
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $id;
-                $cartProduct->user_id = auth()->user()->id;
-                $cartProduct->qty = $request->inputQty;
-                $cartProduct->color = $request->inputcolor;
-                $cartProduct->size = $request->inputsize;
-                $cartProduct->price = $request->inputPrice;
-                $cartProduct->save();
-            }else{
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $id;
-                $cartProduct->ip_address = $request->ip();
-                $cartProduct->qty = $request->inputQty;
-                $cartProduct->color = $request->inputcolor;
-                $cartProduct->size = $request->inputsize;
-                $cartProduct->price = $request->inputPrice;
-                $cartProduct->save();
+            if ($oldCartProduct){
+                $oldCartProduct->qty = $oldCartProduct->qty + $request->inputQty;
+                $oldCartProduct->price += $request->inputPrice;
+                $oldCartProduct->save();
+            }
+            else
+            {
+                if (auth()->check()){
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $id;
+                    $cartProduct->user_id = auth()->user()->id;
+                    $cartProduct->qty = $request->inputQty;
+                    $cartProduct->color = $request->inputcolor;
+                    $cartProduct->size = $request->inputsize;
+                    $cartProduct->price = $request->inputPrice;
+                    $cartProduct->save();
+                }else{
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $id;
+                    $cartProduct->ip_address = $request->ip();
+                    $cartProduct->qty = $request->inputQty;
+                    $cartProduct->color = $request->inputcolor;
+                    $cartProduct->size = $request->inputsize;
+                    $cartProduct->price = $request->inputPrice;
+                    $cartProduct->save();
+                }
             }
             // return redirect()->back()->with('success', 'Added to cart!');
             return redirect()->back();
         }
 
         else{
-            if (auth()->check()){
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $id;
-                $cartProduct->user_id = auth()->user()->id;
-                $cartProduct->qty = $request->inputQty;
-                $cartProduct->color = $request->inputcolor;
-                $cartProduct->size = $request->inputsize;
-                $cartProduct->price = $request->inputPrice;
-                $cartProduct->save();
-            }else{
-                $cartProduct = new Cart();
-                $cartProduct->product_id = $id;
-                $cartProduct->ip_address = $request->ip();
-                $cartProduct->qty = $request->inputQty;
-                $cartProduct->color = $request->inputcolor;
-                $cartProduct->size = $request->inputsize;
-                $cartProduct->price = $request->inputPrice;
-                $cartProduct->save();
+            if ($oldCartProduct){
+                $oldCartProduct->qty = $oldCartProduct->qty + $request->inputQty;
+                $oldCartProduct->price += $request->inputPrice;
+                $oldCartProduct->save();
+            }
+            else
+            {
+                if (auth()->check()){
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $id;
+                    $cartProduct->user_id = auth()->user()->id;
+                    $cartProduct->qty = $request->inputQty;
+                    $cartProduct->color = $request->inputcolor;
+                    $cartProduct->size = $request->inputsize;
+                    $cartProduct->price = $request->inputPrice;
+                    $cartProduct->save();
+                }else{
+                    $cartProduct = new Cart();
+                    $cartProduct->product_id = $id;
+                    $cartProduct->ip_address = $request->ip();
+                    $cartProduct->qty = $request->inputQty;
+                    $cartProduct->color = $request->inputcolor;
+                    $cartProduct->size = $request->inputsize;
+                    $cartProduct->price = $request->inputPrice;
+                    $cartProduct->save();
+                }
             }
             // return redirect('/checkout')->with('success', 'Added to cart!');
             return redirect('/checkout');
@@ -288,17 +326,34 @@ class CartController extends Controller
          return response()->json($getUserProducts, 200);
      }
 
-     public function updateCartProduct(Request $request, $id)
-     {
-         DB::table('carts')->where('id', $id)->increment('qty');
-         $cart = DB::table('carts')->where('id', $id)->first();
-         $product = Product::where('id', $cart->product_id)->first();
-         $productPrice = $product->discount_price ? $product->discount_price : $product->regular_price;
-         DB::table('carts')->where('id', $id)->update(['price' => $cart->qty * $productPrice]);
-         return response()->json($id);
-     }
+    public function updateCartProduct(Request $request, $id)
+    {
+        $cart = DB::table('carts')->where('id', $id)->first();
 
-     public function decrementCartProduct(Request $request, $id)
+        if (!$cart) {
+            return response()->json(['error' => 'Cart item not found.'], 404);
+        }
+
+        if ($request->type == 'increment') {
+            DB::table('carts')->where('id', $id)->increment('qty');
+        } elseif ($request->type == 'decrement' && $cart->qty > 1) {
+            DB::table('carts')->where('id', $id)->decrement('qty');
+        }
+
+        $updatedCart = DB::table('carts')->where('id', $id)->first();
+        $product = Product::find($updatedCart->product_id);
+        $pricePerItem = $product->discount_price ?? $product->regular_price;
+        $updatedPrice = $updatedCart->qty * $pricePerItem;
+
+        DB::table('carts')->where('id', $id)->update(['price' => $updatedPrice]);
+
+        return response()->json([
+            'updatedQty' => $updatedCart->qty,
+            'updatedPrice' => $updatedPrice
+        ]);
+    }
+
+    public function decrementCartProduct(Request $request, $id)
      {
          DB::table('carts')->where('id', $id)->decrement('qty');
          $cartDecrement = DB::table('carts')->where('id', $id)->first();

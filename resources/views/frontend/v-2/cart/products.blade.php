@@ -43,19 +43,19 @@
                             ৳ {{$cart->product->discount_price ?? $cart->product->regular_price}}
                         </td>
                         <td class="qty-increment-decrement-outer">
-                            {{-- <button title="Increment" class="increment-btn">
+                            <button title="Increment" class="increment-btn" data-id="{{ $cart->id }}">
                                 <i class="fas fa-plus"></i>
-                            </button> --}}
-                            <input type="number" name="qty" readonly value="{{$cart->qty}}" min="1" />
-                            {{-- <button title="Decrement" class="decrement-btn">
+                            </button>
+                            <input type="number" name="qty" class="cart-qty" data-id="{{ $cart->id }}" readonly value="{{ $cart->qty }}" min="1" />
+                            <button title="Decrement" class="decrement-btn" data-id="{{ $cart->id }}">
                                 <i class="fas fa-minus"></i>
-                            </button> --}}
+                            </button>
                         </td>
                         <td>
                             <a href="{{url('product/delete/form/cart/'.$cart->id)}}" class="remove-product">Remove</a>
                         </td>
-                        <td class="cart-product-total-outer">
-                            ৳ {{$cart->price *$cart->qty}}
+                        <td class="cart-product-total-outer" id="cart-total-{{ $cart->id }}">
+                            ৳ {{ $cart->price }}
                         </td>
                     </tr>
                     @endforeach
@@ -74,7 +74,39 @@
 @endsection
 
 @push('script')
-{{-- Data Layer... --}}
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+            $('.increment-btn').on('click', function () {
+                const id = $(this).data('id');
+                updateCartQuantity(id, 'increment');
+            });
+
+            $('.decrement-btn').on('click', function () {
+                const id = $(this).data('id');
+                updateCartQuantity(id, 'decrement');
+            });
+
+            function updateCartQuantity(id, type) {
+                const url = '{{ route("cart.update", ":id") }}'.replace(':id', id);
+
+                $.ajax({
+                    url: url,
+                    type: 'PUT',
+                    data: {
+                        _token: '{{ csrf_token() }}',
+                        type: type
+                    },
+                    success: function (res) {
+                        $('#cart-total-' + id).html('৳ ' + res.updatedPrice);
+                        $('input.cart-qty[data-id="' + id + '"]').val(res.updatedQty);
+                    }
+                });
+            }
+        });
+    </script>
+
+    {{-- Data Layer... --}}
 <script type = "text/javascript">
     window.addEventListener('load', function() {
         var cartTotal = document.getElementById('cartTotal').value;
