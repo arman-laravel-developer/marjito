@@ -251,17 +251,17 @@
                                         </div>
                                         <div class="col-md-12 mt-3">
                                             <div style="background: lightgrey;padding: 10px;margin-bottom: 10px;">
-                                                <input type="radio" id="inside_dhaka" name="area" value="80"
+                                                <input type="radio" id="inside_dhaka" name="area" value="60"
                                                     onchange="deliveryCharge(this.value)">
                                                 <label for="inside_dhaka"
-                                                    style="font-size: 18px;font-weight: 600;color: #000;">Inside Dhaka (80
+                                                    style="font-size: 18px;font-weight: 600;color: #000;">Inside Dhaka (60
                                                     Tk.)</label>
                                             </div>
                                             <div style="background: lightgrey;padding: 10px;">
-                                                <input type="radio" id="outside_dhaka" name="area" value="150"
+                                                <input type="radio" id="outside_dhaka" name="area" value="120"
                                                     onchange="deliveryCharge(this.value)">
                                                 <label for="outside_dhaka"
-                                                    style="font-size: 18px;font-weight: 600;color: #000;">Outside Dhaka (150
+                                                    style="font-size: 18px;font-weight: 600;color: #000;">Outside Dhaka (120
                                                     Tk.)</label>
                                             </div>
                                             @if ($errors->has('area'))
