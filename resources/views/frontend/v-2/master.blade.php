@@ -2,6 +2,7 @@
 <html>
 
 <head>
+    <meta name="facebook-domain-verification" content="dfhfor9tft46z66t55mubd5vjct5c2"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>@yield('title') | {{env('APP_NAME')}}</title>
